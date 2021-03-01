@@ -1,4 +1,4 @@
-package projects.todos.option;
+package projects.todolist.option;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class TodoListOption {
 
-    private static final Logger log = LoggerFactory.getLogger(TodoListOption.class);
+    private static final Logger logger = LoggerFactory.getLogger(TodoListOption.class);
 
     public void run(Object... args) {
         showWelcomeMessage();
