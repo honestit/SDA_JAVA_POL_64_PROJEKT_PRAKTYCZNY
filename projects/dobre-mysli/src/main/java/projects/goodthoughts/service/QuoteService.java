@@ -1,7 +1,9 @@
 package projects.goodthoughts.service;
 
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import projects.goodthoughts.config.DbUtil;
 import projects.goodthoughts.model.Quote;
 
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 public class QuoteService {
 
@@ -67,5 +70,19 @@ public class QuoteService {
         int indexOfSpanClosed = body.indexOf("</span>", indexOfSpan);
         int spanLength = "<span itemprop=\"text\">".length();
         return body.substring(indexOfSpan + spanLength, indexOfSpanClosed);
+    }
+
+    public Quote save(Quote quote) {
+        logger.debug("Zapis cytatu: {}", quote);
+        Session session = DbUtil.getSession();
+        session.save(quote);
+        logger.debug("Cytat zapisano pod id: {}", quote.getId());
+        return quote;
+    }
+
+    public void showSavedQuotes() {
+        List<Quote> quotes = DbUtil.getSession().createQuery("SELECT q FROM Quote q", Quote.class).getResultList();
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAA Ile cytatów:  " + quotes.size());
+        quotes.forEach(System.out::println);
     }
 }

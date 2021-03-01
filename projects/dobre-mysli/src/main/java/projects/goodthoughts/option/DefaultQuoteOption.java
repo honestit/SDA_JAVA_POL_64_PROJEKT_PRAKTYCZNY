@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import projects.goodthoughts.model.Quote;
 import projects.goodthoughts.service.QuoteService;
 
+import java.util.Scanner;
+
 public class DefaultQuoteOption implements Option {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultQuoteOption.class);
@@ -22,5 +24,16 @@ public class DefaultQuoteOption implements Option {
         logger.debug("Pobrany cytat: {}", defaultQuote);
 
         System.out.printf("Cytat na dziś:%n\t \"%s\" (%s)%n", defaultQuote.getContent(), defaultQuote.getAuthor());
+
+        System.out.print("\nCzy zapisać? (tak dla zapisu): ");
+        String input = new Scanner(System.in).nextLine();
+
+        if ("tak".equals(input)) {
+            Quote savedQuote = quoteService.save(defaultQuote);
+            logger.info("Zapisano cytat: {}", savedQuote);
+
+            // Tymczasowe
+            quoteService.showSavedQuotes();
+        }
     }
 }
