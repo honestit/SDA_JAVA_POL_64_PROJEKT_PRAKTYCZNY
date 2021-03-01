@@ -1,4 +1,4 @@
-package projects.todos.option;
+package projects.todolist.option;
 
 import java.util.Scanner;
 import java.util.Set;

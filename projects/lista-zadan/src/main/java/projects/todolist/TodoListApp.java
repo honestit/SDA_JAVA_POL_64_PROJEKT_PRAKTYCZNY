@@ -1,6 +1,6 @@
-package projects.todos;
+package projects.todolist;
 
-import projects.todos.option.TodoListOption;
+import projects.todolist.option.TodoListOption;
 
 public class TodoListApp {
 
