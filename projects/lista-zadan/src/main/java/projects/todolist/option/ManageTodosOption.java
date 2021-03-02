@@ -3,24 +3,7 @@ package projects.todolist.option;
 import java.util.Scanner;
 import java.util.Set;
 
-public class ManageTodosOption {
-
-    public void run(Object... args) {
-        showWelcomeMessage();
-        while (true) {
-            showOptions();
-            String option = getUserOption();
-            if (validateOption(option)) {
-                executeOption(option);
-                if (checkIsExitOption(option)) {
-                    break;
-                }
-            } else {
-                executeInvalidOption(option);
-            }
-        }
-        showExitMessage();
-    }
+public class ManageTodosOption implements Option {
 
     public void showWelcomeMessage() {
         System.out.println("\nZarządzanie listami zadań");
@@ -47,6 +30,8 @@ public class ManageTodosOption {
     public void executeOption(String option) {
         switch (option) {
             case "1":
+                new AddTodosOption().run();
+                break;
             case "2":
             case "3":
                 break;
