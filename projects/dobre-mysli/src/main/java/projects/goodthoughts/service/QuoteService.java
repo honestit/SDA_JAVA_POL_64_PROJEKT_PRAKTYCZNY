@@ -1,6 +1,7 @@
 package projects.goodthoughts.service;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import projects.goodthoughts.config.DbUtil;
@@ -75,8 +76,11 @@ public class QuoteService {
     public Quote save(Quote quote) {
         logger.debug("Zapis cytatu: {}", quote);
         Session session = DbUtil.getSession();
+        Transaction transaction = session.beginTransaction();
         session.save(quote);
+        transaction.commit();
         logger.debug("Cytat zapisano pod id: {}", quote.getId());
+
         return quote;
     }
 
