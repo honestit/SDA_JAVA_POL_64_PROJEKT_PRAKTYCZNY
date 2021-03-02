@@ -1,12 +1,26 @@
 package projects.todolist.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "tasks")
 public class Task {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(optional = false)
+    private Todos todos;
+
+    @Column(nullable = false)
     private String name;
+    @Column(name = "created_on", insertable = false)
     private LocalDateTime createdOn;
+    @Column(name = "expected_completed_on")
     private LocalDateTime expectedCompletedOn;
+    @Column(name = "completed_on")
     private LocalDateTime completedOn;
 
     public Task() {
@@ -23,6 +37,11 @@ public class Task {
         this.createdOn = createdOn;
         this.expectedCompletedOn = expectedCompletedOn;
         this.completedOn = completedOn;
+    }
+
+    @PrePersist
+    void prePersist() {
+        createdOn = LocalDateTime.now();
     }
 
     @Override
@@ -86,5 +105,21 @@ public class Task {
 
     public void setCompletedOn(LocalDateTime completedOn) {
         this.completedOn = completedOn;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Todos getTodos() {
+        return todos;
+    }
+
+    public void setTodos(Todos todos) {
+        this.todos = todos;
     }
 }
