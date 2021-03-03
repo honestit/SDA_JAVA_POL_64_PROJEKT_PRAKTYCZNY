@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import projects.todolist.config.DbUtil;
 import projects.todolist.model.Todos;
 
+import java.util.Collection;
+
 public class TodosService {
 
     private static final Logger logger = LoggerFactory.getLogger(TodosService.class);
@@ -20,5 +22,10 @@ public class TodosService {
         transaction.commit();
         logger.debug("Zatwierdzono zapis");
         return todos;
+    }
+
+    public Collection<Todos> findAll() {
+        Session session = DbUtil.getSession();
+        return session.createQuery("SELECT ts FROM Todos ts", Todos.class).getResultList();
     }
 }

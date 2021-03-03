@@ -33,6 +33,8 @@ public class ManageTodosOption implements Option {
                 new AddTodosOption().run();
                 break;
             case "2":
+                new ShowTodosOption().run();
+                break;
             case "3":
                 break;
         }
