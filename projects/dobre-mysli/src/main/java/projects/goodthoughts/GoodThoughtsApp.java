@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import projects.goodthoughts.model.Quote;
 import projects.goodthoughts.option.DefaultQuoteOption;
 import projects.goodthoughts.option.Option;
+import projects.goodthoughts.option.ReviewQuotesOption;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -57,8 +58,16 @@ public class GoodThoughtsApp implements Option {
                 executeDefaultQuoteOption();
                 break;
             case "2":
+                break;
             case "3":
+                executeReviewQuotesOption();
+                break;
         }
+    }
+
+    private void executeReviewQuotesOption() {
+        ReviewQuotesOption option = new ReviewQuotesOption();
+        option.run();
     }
 
     public void executeDefaultQuoteOption() {

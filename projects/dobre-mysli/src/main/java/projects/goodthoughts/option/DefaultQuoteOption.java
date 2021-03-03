@@ -25,15 +25,14 @@ public class DefaultQuoteOption implements Option {
 
         System.out.printf("Cytat na dziś:%n\t \"%s\" (%s)%n", defaultQuote.getContent(), defaultQuote.getAuthor());
 
-        System.out.print("\nCzy zapisać? (tak dla zapisu): ");
-        String input = new Scanner(System.in).nextLine();
+        if (!quoteService.exists(defaultQuote)) {
+            System.out.print("\nCzy zapisać? (tak dla zapisu): ");
+            String input = new Scanner(System.in).nextLine();
 
-        if ("tak".equals(input)) {
-            Quote savedQuote = quoteService.save(defaultQuote);
-            logger.info("Zapisano cytat: {}", savedQuote);
-
-            // Tymczasowe
-            quoteService.showSavedQuotes();
+            if ("tak".equals(input)) {
+                Quote savedQuote = quoteService.save(defaultQuote);
+                logger.info("Zapisano cytat: {}", savedQuote);
+            }
         }
     }
 }

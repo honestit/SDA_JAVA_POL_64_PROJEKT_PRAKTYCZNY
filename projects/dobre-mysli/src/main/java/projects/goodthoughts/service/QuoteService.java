@@ -2,6 +2,7 @@ package projects.goodthoughts.service;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import projects.goodthoughts.config.DbUtil;
@@ -12,6 +13,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Collection;
 import java.util.List;
 
 public class QuoteService {
@@ -84,9 +86,19 @@ public class QuoteService {
         return quote;
     }
 
-    public void showSavedQuotes() {
-        List<Quote> quotes = DbUtil.getSession().createQuery("SELECT q FROM Quote q", Quote.class).getResultList();
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAA Ile cytatów:  " + quotes.size());
-        quotes.forEach(System.out::println);
+    public Collection<Quote> findAll() {
+        Session session = DbUtil.getSession();
+        return session.createQuery("SELECT q FROM Quote q ORDER BY q.createdOn DESC", Quote.class).getResultList();
+    }
+
+    public boolean exists(Quote quote) {
+        Session session = DbUtil.getSession();
+        Query<Quote> query = session.createQuery("SELECT q FROM Quote q WHERE q.author = :author AND q.content = :content", Quote.class);
+        // select * from quotes WHERE author = 'Sally Blount' and content = 'If we ever stop ...'
+        query.setParameter("author", quote.getAuthor());
+        query.setParameter("content", quote.getContent());
+        List<Quote> resultList = query.getResultList();
+        return !resultList.isEmpty();
+        // return resultList.size() > 0;
     }
 }
