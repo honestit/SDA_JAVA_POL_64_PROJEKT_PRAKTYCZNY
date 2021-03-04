@@ -101,4 +101,21 @@ public class QuoteService {
         return !resultList.isEmpty();
         // return resultList.size() > 0;
     }
+
+    public Quote getQuote(Long id) {
+        logger.debug("Wyszukiwanie cytatu po id = {}", id);
+        Session session = DbUtil.getSession();
+        Quote quote = session.find(Quote.class, id);
+        logger.debug("Znaleziony cytat: {}", quote);
+        return quote;
+    }
+
+    public void remove(Quote quote) {
+        logger.info("Usuwany cytat: {}", quote);
+        Session session = DbUtil.getSession();
+        Transaction transaction = session.beginTransaction();
+        session.remove(quote);
+        transaction.commit();
+        logger.info("Usunięto cytat o id = {}", quote.getId());
+    }
 }

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import projects.goodthoughts.model.Quote;
 import projects.goodthoughts.option.DefaultQuoteOption;
+import projects.goodthoughts.option.DeleteQuoteOption;
 import projects.goodthoughts.option.Option;
 import projects.goodthoughts.option.ReviewQuotesOption;
 
@@ -62,7 +63,15 @@ public class GoodThoughtsApp implements Option {
             case "3":
                 executeReviewQuotesOption();
                 break;
+            case "4":
+                executeDeleteQuoteOption();
+                break;
         }
+    }
+
+    private void executeDeleteQuoteOption() {
+        DeleteQuoteOption option = new DeleteQuoteOption();
+        option.run();
     }
 
     private void executeReviewQuotesOption() {
@@ -77,7 +86,7 @@ public class GoodThoughtsApp implements Option {
 
     @Override
     public boolean validateOption(String userInput) {
-        Set<String> validOptions = Set.of("0", "1", "2", "3");
+        Set<String> validOptions = Set.of("0", "1", "2", "3", "4");
         return validOptions.contains(userInput);
 //        switch (userInput) {
 //            case "0":
@@ -108,6 +117,7 @@ public class GoodThoughtsApp implements Option {
         System.out.println("\t1. Pobierz domyślny cytat");
         System.out.println("\t2. Dodaj własny cytat");
         System.out.println("\t3. Wyświetl zapisane cytaty");
+        System.out.println("\t4. Usuń cytat");
         System.out.println("\t0. Zakończ");
     }
 

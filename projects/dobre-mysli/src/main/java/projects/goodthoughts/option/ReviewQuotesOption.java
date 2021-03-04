@@ -19,7 +19,8 @@ public class ReviewQuotesOption implements Option {
         Collection<Quote> quotes = quoteService.findAll();
         // |                  James: 'Cytat'                                                |
         quotes.forEach(quote -> {
-            System.out.printf("| %30s: '%-140s' |%n",
+            System.out.printf("|(%d) %30s: '%-140s' |%n",
+                    quote.getId(),
                     quote.getAuthor(),
                     quote.getContent());
         });
