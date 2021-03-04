@@ -58,26 +58,24 @@ public class ShowTodosOption implements Option{
 //            Task lastCompletedTask = (seen ? Optional.of(best) : Optional.<Task>empty())
 //                    .get();
 
-            Task lastCompletedTask = todos.getTasks().stream()
+            Optional<Task> lastCompletedTask = todos.getTasks().stream()
                     .filter(task -> task.getCompletedOn() != null)
-                    .max(Comparator.comparing(Task::getCompletedOn))
-                    .get();
+                    .max(Comparator.comparing(Task::getCompletedOn));
 
             // DbUtil.getSession().createQuery("SELECT t FROM Task t WHERE t.completedOn IS NOT NULL AND t.todos = :todos ORDER BY t.completedOn DESC", Task.class).setParameter("todos", todos).setMaxResults(1).getResultsList();
 
-            Task nextToBeCompletedTask = todos.getTasks().stream()
+            Optional<Task> nextToBeCompletedTask = todos.getTasks().stream()
                     .filter(task -> task.getCompletedOn() == null)
-                    .min(Comparator.comparing(Task::getExpectedCompletedOn))
-                    .get();
+                    .min(Comparator.comparing(Task::getExpectedCompletedOn));
 
             System.out.printf("\t- ostatnio zakończone: %s (%s)%n",
-                    lastCompletedTask.getName(),
-                    lastCompletedTask.getCompletedOn()
-                            .format(DateTimeFormatter.ofPattern("EEE, dd MMMM, HH:mm")));
+                    lastCompletedTask.map(Task::getName).orElse("brak"),
+                    lastCompletedTask.map(Task::getCompletedOn)
+                            .map(date -> date.format(DateTimeFormatter.ofPattern("EEE, dd MMMM, HH:mm"))).orElse("-"));
             System.out.printf("\t- nabliższe do zrobienia: %s (%s)%n",
-                    nextToBeCompletedTask.getName(),
-                    nextToBeCompletedTask.getExpectedCompletedOn()
-                            .format(DateTimeFormatter.ofPattern("EEE, d MMMM, HH:mm")));
+                    nextToBeCompletedTask.map(Task::getName).orElse("brak"),
+                    nextToBeCompletedTask.map(Task::getExpectedCompletedOn)
+                            .map(date -> date.format(DateTimeFormatter.ofPattern("EEE, dd MMMM, HH:mm"))).orElse("-"));
         }
     }
 

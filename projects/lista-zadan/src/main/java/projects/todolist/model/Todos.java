@@ -1,5 +1,7 @@
 package projects.todolist.model;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +18,7 @@ public class Todos {
     private List<Task> tasks;
 
     @Column(unique = true, nullable = false)
+//    @NaturalId // (patrz TodosService.getTodos(String name) co nam to daje)
     private String name;
     @Column(name = "created_on", updatable = false)
     private LocalDateTime createdOn;

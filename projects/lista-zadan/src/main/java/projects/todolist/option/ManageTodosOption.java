@@ -36,6 +36,7 @@ public class ManageTodosOption implements Option {
                 new ShowTodosOption().run();
                 break;
             case "3":
+                new DeleteTodosOption().run();
                 break;
         }
     }
